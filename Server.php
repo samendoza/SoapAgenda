@@ -10,6 +10,7 @@
         {
             require_once(getcwd() . '/soap/nusoap.php');
             require_once(getcwd() . '/Service.php');
+            require_once(getcwd() . '/ServiceUsuario.php');
             $this->_soapServer = new soap_server();
             $this->_soapServer->configureWSDL("Example WSDL");
             
@@ -46,6 +47,28 @@
                  "Servicio que retorna un string"
              );
 
+             $this->_soapServer->register(
+                 "ServiceUsuario.getUsuario",
+                 array('usuario' => "xsd:string"),
+                 array("return" => "xsd:Array"),
+                 false,
+                 false,
+                 "rpc",
+                 "encoded",
+                 "Servicio que retorna los datos de un usuario"
+             );
+             
+             $this->_soapServer->register(
+                 "ServiceUsuario.registrarUsuario",
+                 array('usuario' => "xsd:string", 'usuario' => "xsd:string", 'usuario' => "xsd:string"),
+                 array("return" => "xsd:string"),
+                 false,
+                 false,
+                 "rpc",
+                 "encoded",
+                 "Servicio que inserta los datos del usuario"
+             );
+             
              //procesamos el webservice
              $this->_soapServer->service(file_get_contents("php://input"));
         }

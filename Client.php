@@ -51,6 +51,32 @@ class Client
         }
     }
     
+    public function getUsuario()
+    {
+        try
+        {
+            $result = $this->_soapClient->call('ServiceUsuario.getUsuario', array('usuario' => 'Saul'));
+            $this->_soapResponse($result);
+        }
+        catch (SoapFault $fault)
+        {
+            trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
+        }
+    }
+    
+    public function registrarUsuario($usuario, $pass, $imagen)
+    {
+        try
+        {
+            $result = $this->_soapClient->call('ServiceUsuario.registrarUsuario', array('usuario' => $usuario, 'pass'=>$pass, 'imagen'=>$imagen));
+            $this->_soapResponse($result);
+        }
+        catch (SoapFault $fault)
+        {
+            trigger_error("SOAP Fault: (faultcode: {$fault->faultcode}, faultstring: {$fault->faultstring})", E_USER_ERROR);
+        }
+    }
+    
     private function _soapResponse($result)
     {
         echo '<h2>Result</h2>';
